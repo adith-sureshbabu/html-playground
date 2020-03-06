@@ -139,7 +139,7 @@ nav ul li:hover,
 }
 
 .active {
-  border-radius: 100px;
+  /* border-radius: 100px; */
   background: yellowgreen;
 }
 
