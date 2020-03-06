@@ -21,7 +21,7 @@ body {
 
 .flex-item-1 {
   flex: 0;
-  background: darkolivegreen;
+  background: indianred;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -48,7 +48,7 @@ body {
 }
 
 [class*="fi-2-column-"] {
-  border-right: 1px solid yellowgreen;
+  border-right: 1px solid #EF5350;
   background: #ddd;
   flex: auto;
   width: 25%;
@@ -72,7 +72,7 @@ iframe {
 @media only screen and (max-width: 1016px) {
   [class*="fi-2-column-"] {
     border-right: none;
-    border-bottom: 1px solid yellowgreen;
+    border-bottom: 1px solid #EF5350;
   }
 
   [class*="fi-2-column-"]:last-child {
@@ -110,7 +110,7 @@ nav * {
 }
 
 nav {
-  background: darkolivegreen;
+  background: indianred;
   text-align: center;
   position: relative;
 }
@@ -132,7 +132,7 @@ nav ul li {
 
 nav ul li:hover,
 .active {
-  background: yellowgreen;
+  background: #EF5350;
   cursor: pointer;
   border-left: 1px solid wheat;
   border-right: 1px solid wheat;
@@ -140,7 +140,7 @@ nav ul li:hover,
 
 .active {
   /* border-radius: 100px; */
-  background: yellowgreen;
+  background: #EF5350;
 }
 
 .active > a {
@@ -175,18 +175,18 @@ nav ul li:hover ul li {
   margin-right: auto;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
-  background: darkolivegreen;
+  background: indianred;
   border: none !important;
   font-weight: bolder;
   font-size: 26px;
 }
 
 .titleNav > a {
-  color: yellowgreen;
+  color: #fff;
 }
 
 .titleNav:hover {
-  background: darkolivegreen;
+  background: indianred;
 }
 
 .optionsNav {
@@ -206,5 +206,5 @@ nav ul li:hover ul li {
 }
 
 .hbmNavIcon:hover {
-  background: darkolivegreen;
+  background: indianred;
 }
