@@ -21,7 +21,7 @@ body {
 
 .flex-item-1 {
   flex: 0;
-  background: indianred;
+  background: linear-gradient(rebeccapurple, purple);;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -48,8 +48,8 @@ body {
 }
 
 [class*="fi-2-column-"] {
-  border-right: 1px solid #EF5350;
-  background: #ddd;
+  border-right: 1px solid DarkMagenta;
+  background: #fff;
   flex: auto;
   width: 25%;
   height: 100%;
@@ -72,7 +72,7 @@ iframe {
 @media only screen and (max-width: 1016px) {
   [class*="fi-2-column-"] {
     border-right: none;
-    border-bottom: 1px solid #EF5350;
+    border-bottom: 1px solid DarkMagenta;
   }
 
   [class*="fi-2-column-"]:last-child {
@@ -110,7 +110,7 @@ nav * {
 }
 
 nav {
-  background: indianred;
+  background: linear-gradient(rebeccapurple, purple);;
   text-align: center;
   position: relative;
 }
@@ -132,7 +132,7 @@ nav ul li {
 
 nav ul li:hover,
 .active {
-  background: #EF5350;
+  background: DarkMagenta;
   cursor: pointer;
   border-left: 1px solid wheat;
   border-right: 1px solid wheat;
@@ -140,7 +140,7 @@ nav ul li:hover,
 
 .active {
   /* border-radius: 100px; */
-  background: #EF5350;
+  background: DarkMagenta;
 }
 
 .active > a {
@@ -175,7 +175,7 @@ nav ul li:hover ul li {
   margin-right: auto;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
-  background: indianred;
+  background: linear-gradient(rebeccapurple, purple);;
   border: none !important;
   font-weight: bolder;
   font-size: 26px;
@@ -186,7 +186,7 @@ nav ul li:hover ul li {
 }
 
 .titleNav:hover {
-  background: indianred;
+  background: linear-gradient(rebeccapurple, purple);;
 }
 
 .optionsNav {
@@ -206,5 +206,5 @@ nav ul li:hover ul li {
 }
 
 .hbmNavIcon:hover {
-  background: indianred;
+  background: linear-gradient(rebeccapurple, purple);;
 }
