@@ -1,11 +1,37 @@
-<html>
+<html lang="en" class="default-theme">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="content-type" content="text/html" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML PlayGround - Code Editor</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta
+      name="keywords"
+      content="html, css, js, code editor, compiler, tryit editor, ace editor, web design, code playground, live editor"
+    />
+    <meta
+      name="description"
+      content="Code editor for working with html css and js code online. Easily design web pages and templates and view live result side by side."
+    />
+    <meta name="robots" />
+    <link
+      rel="preload"
+      href="./fonts/BioRhyme-Regular-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="./fonts/BioRhyme-Regular-latin_ext.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./fonts/fonts.css" />
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
-
   <body>
     <div class="flex-container">
       <div class="flex-item-1">
@@ -29,36 +55,37 @@
             </li>
             <span class="ariahidden"></span>
             <li class="navitem optionsNav">
-              <a href="#" class="optionsNavLink">OPTIONS &#9656;</a>
+              <a href="#" class="optionsNavLink"></a>
               <ul>
-                <li style="display: none;"><a href="#">Save Code Locally</a></li>
-                <li><a href="#" id="chTheme" onclick="changeTheme()">Switch Theme</a>
-                </li>
+                <li style="display: none"><a href="#">Save Code</a></li>
+                <li onclick="changeTheme()"><a href="#" id="chTheme">Switch Theme</a></li>
               </ul>
             </li>
           </ul>
-          <a href="#" class="hbmNavIcon" onclick="navToggle()">&#9776;</a>
+          <a href="javascript:void(0)" class="hbmNavIcon" onclick="navToggle()">&#9776;</a>
         </nav>
       </div>
       <div data-flex-splitter-horizontal class="flex-item-2 bigscreen">
-        <div id="htmlEditor" class="editor fi-2-column-1 con"><p class="greet">Hello</p>
-</div>
-        <div id="cssEditor" class="editor fi-2-column-2 con">.greet {color:red;}
-</div>
-        <div id="jsEditor" class="editor fi-2-column-3 con">document.querySelectorAll(".greet")[0].innerHTML+=" World..!";
-</div>
+        <div id="htmlEditor" class="editor fi-2-column-1 con"><h2 class="greet">Hello</h2></div>
+        <div id="cssEditor" class="editor fi-2-column-2 con">body { 
+    background:#272822; 
+} 
+.greet { 
+    color:tomato; 
+}</div>
+        <div id="jsEditor" class="editor fi-2-column-3 con">document.querySelectorAll(".greet")[0].innerHTML+=" World..!";</div>
         <iframe id="ifrResult" class="fi-2-column-4 con"></iframe>
       </div>
     </div>
-	<script type="text/javascript" src="./main.js"></script>
-	<script type="text/javascript" src="./ace/ace.js"></script>
-	<script type="text/javascript" src="./ace/mode-css.js"></script>
-	<script type="text/javascript" src="./ace/mode-javascript.js"></script>
-	<script type="text/javascript" src="./ace/mode-html.js"></script>
-	<script type="text/javascript" src="./ace/worker-css.js"></script>
-	<script type="text/javascript" src="./ace/worker-javascript.js"></script>
-	<script type="text/javascript" src="./ace/worker-html.js"></script>
-	<script type="text/javascript" src="./ace/theme-crimson_editor.js"></script>
-	<script type="text/javascript" src="./ace/theme-monokai.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/ace/ace.js"></script>
+    <script type="text/javascript" src="./js/ace/mode-css.js"></script>
+    <script type="text/javascript" src="./js/ace/mode-javascript.js"></script>
+    <script type="text/javascript" src="./js/ace/mode-html.js"></script>
+    <script type="text/javascript" src="./js/ace/worker-css.js"></script>
+    <script type="text/javascript" src="./js/ace/worker-javascript.js"></script>
+    <script type="text/javascript" src="./js/ace/worker-html.js"></script>
+    <script type="text/javascript" src="./js/ace/theme-crimson_editor.js"></script>
+    <script type="text/javascript" src="./js/ace/theme-monokai.js"></script>
   </body>
 </html>
