@@ -1,12 +1,8 @@
 function toggle(el, index) {
   var cdEd = document.querySelectorAll(".con");
   if (document.querySelectorAll(".active").length !== 1) {
-    el.classList.contains("active")
-      ? el.classList.remove("active")
-      : el.classList.add("active");
-    cdEd[index].style.display == "none"
-      ? (cdEd[index].style.display = "flex")
-      : (cdEd[index].style.display = "none");
+    el.classList.contains("active") ? el.classList.remove("active") : el.classList.add("active");
+    cdEd[index].style.display == "none" ? (cdEd[index].style.display = "flex") : (cdEd[index].style.display = "none");
     triggerResize();
   } else {
     !el.classList.contains("active") ? el.classList.add("active") : null;
@@ -26,20 +22,20 @@ function triggerResize() {
   window.dispatchEvent(resizeEvent);
 }
 var codeEditor = document.querySelectorAll(".editor");
-window.addEventListener("DOMContentLoaded", event => {
+window.addEventListener("DOMContentLoaded", (event) => {
   document.querySelectorAll(".con")[1].style.display = "none";
   document.querySelectorAll(".con")[2].style.display = "none";
-  window.innerWidth <= 768 ? navToggle() : null;
+  // window.innerWidth <= 768 ? navToggle() : null;
 
-  codeEditor.forEach.call(codeEditor, function(editor, index) {
+  codeEditor.forEach.call(codeEditor, function (editor, index) {
     makeEditor(editor, ["html", "css", "javascript"][index]);
   });
   triggerResize();
   updateiFrame();
 });
 
-window.addEventListener("resize", event => {
-  window.innerWidth > 768 ? navToggle(true) : null;
+window.addEventListener("resize", (event) => {
+  window.innerWidth > 768 ? navToggle(true) : navToggle(false);
   updateiFrame();
 });
 
@@ -59,14 +55,21 @@ for (let i = 0; i < ariahidden.length; i++) {
 
 let nav_display = false;
 
-function navToggle(val) {
+function navToggle(val = null) {
+  if (val !== null) {
+    nav_display = val;
+  }
   var navitems = document.querySelectorAll(".navitem");
   for (let i = 0; i < navitems.length; i++) {
-    nav_display || val
-      ? (navitems[i].style.display = "block")
-      : (navitems[i].style.display = "none");
+    if (nav_display || val) {
+      navitems[i].style.display = "block";
+    } else {
+      navitems[i].style.display = "none";
+      nav_display = false;
+    }
   }
   nav_display = !nav_display;
+
   return false;
 }
 
@@ -105,13 +108,13 @@ const makeEditor = (editor, editorMode) => {
   aceEditor[x].setFontSize("16px");
   aceEditor[x].setTheme("ace/theme/monokai");
   aceEditor[x].session.setMode({
-    path: `ace/mode/${editorMode}`
+    path: `ace/mode/${editorMode}`,
   });
   aceEditor[x].setShowPrintMargin(false);
   aceEditor[x].session.setUseWrapMode(true);
   aceEditor[x].session.setValue(editorContent);
   for (let y = 0; y < aceEditor.length; y++) {
-    aceEditor[y].session.on("change", function() {
+    aceEditor[y].session.on("change", function () {
       editorOnChange(aceEditor[y], y);
     });
   }
@@ -122,14 +125,12 @@ const editorOnChange = (ed, index) => {
   updateiFrame(index);
 };
 
-const updateiFrame = index => {
+const updateiFrame = (index) => {
   // aceEditor[index].focus();
   // aceEditor[index].navigateFileEnd();
   let htmlTextArea, cssTextArea, jsTextArea, iframeResult;
   let bigscreen = document.querySelector(".bigscreen");
-  bigscreen.style.display !== "none"
-    ? (htmlTextArea = aceEditor[0].getSession().getValue())
-    : null;
+  bigscreen.style.display !== "none" ? (htmlTextArea = aceEditor[0].getSession().getValue()) : null;
   bigscreen.style.display !== "none"
     ? (cssTextArea = aceEditor[1].getSession().getValue())
     : (cssTextArea = aceEditor[4].getSession().getValue());
@@ -139,8 +140,7 @@ const updateiFrame = index => {
   bigscreen.style.display !== "none"
     ? (iframeResult = document.querySelectorAll(".fi-2-column-4")[0])
     : (iframeResult = document.querySelectorAll(".fi-2-column-4")[1]);
-  const iframeDoc =
-    iframeResult.contentDocument || iframeResult.contentWindow.document;
+  const iframeDoc = iframeResult.contentDocument || iframeResult.contentWindow.document;
   const iframeHead = iframeDoc.head;
   const iframeBody = iframeDoc.body;
 
