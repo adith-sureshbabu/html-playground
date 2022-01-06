@@ -1,3 +1,19 @@
+function debounce(func, wait = 250, immediate = false) {
+  var timeout;
+  return function () {
+    var context = this,
+      args = arguments;
+    var later = function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
+
 function toggle(el, index) {
   var cdEd = document.querySelectorAll(".con");
   if (document.querySelectorAll(".active").length !== 1) {
@@ -121,11 +137,11 @@ const makeEditor = (editor, editorMode) => {
   x++;
 };
 
-const editorOnChange = (ed, index) => {
+const editorOnChange = debounce(function (ed, index) {
   updateiFrame(index);
-};
+});
 
-const updateiFrame = (index) => {
+const updateiFrame = debounce(function (index) {
   // aceEditor[index].focus();
   // aceEditor[index].navigateFileEnd();
   let htmlTextArea, cssTextArea, jsTextArea, iframeResult;
@@ -149,4 +165,4 @@ const updateiFrame = (index) => {
   const script = iframeDoc.createElement("script");
   script.innerHTML = "\n" + jsTextArea + "\n";
   iframeBody.appendChild(script);
-};
+});
