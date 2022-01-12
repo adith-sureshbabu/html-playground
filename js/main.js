@@ -14,14 +14,35 @@ function debounce(func, wait = 250, immediate = false) {
   };
 }
 
+function arrayRemove(arr, value) {
+  return arr.filter(function (ele) {
+    return ele != value;
+  });
+}
+
 function toggle(el, index) {
   var cdEd = document.querySelectorAll(".con");
   if (document.querySelectorAll(".active").length !== 1) {
     el.classList.contains("active") ? el.classList.remove("active") : el.classList.add("active");
     cdEd[index].style.display == "none" ? (cdEd[index].style.display = "flex") : (cdEd[index].style.display = "none");
     triggerResize();
+    if (!window.activeEdI) window.activeEdI = [0, 3];
+    if (window.activeEdI.indexOf(index) > -1) window.activeEdI = arrayRemove(window.activeEdI, index);
+    else window.activeEdI.push(index);
+    window.activeEdI.sort();
+    if (index !== 3 && el.classList.contains("active")) {
+      if (!window.activePos) window.activePos = index;
+      aceEditor[index].focus();
+      aceEditor[index].navigateFileEnd();
+    }
   } else {
     !el.classList.contains("active") ? el.classList.add("active") : null;
+    if (window.activeEdI.indexOf(index) < 0) window.activeEdI.push(index);
+    window.activeEdI.sort();
+    if (index !== 3) {
+      aceEditor[index].focus();
+      aceEditor[index].navigateFileEnd();
+    }
     cdEd[index].style.display = "flex";
     triggerResize();
   }
@@ -37,12 +58,17 @@ function triggerResize() {
   resizeEvent.initUIEvent("resize", true, false, window, 0);
   window.dispatchEvent(resizeEvent);
 }
+
 var codeEditor = document.querySelectorAll(".editor");
 window.addEventListener("DOMContentLoaded", (event) => {
   document.querySelectorAll(".con")[1].style.display = "none";
   document.querySelectorAll(".con")[2].style.display = "none";
   // window.innerWidth <= 768 ? navToggle() : null;
-
+  document.querySelector("#htmlEditor").innerHTML = '<h1 class="greet">Hello</h1>';
+  document.querySelector("#cssEditor").innerHTML =
+    ".greet {\n\tcolor:#ffffff;\n\tposition:absolute;\n\ttop:50%;\n\tleft:50%;\n\ttransform:translate(-50%,-50%);";
+  document.querySelector("#cssEditor").innerHTML += "\n\tbackground:tomato;\n\tborder:1px solid;\n\tpadding:40px;\n}";
+  document.querySelector("#jsEditor").innerHTML = 'document.querySelector(".greet").innerHTML+=" World..!";';
   codeEditor.forEach.call(codeEditor, function (editor, index) {
     makeEditor(editor, ["html", "css", "javascript"][index]);
   });
@@ -133,6 +159,10 @@ const makeEditor = (editor, editorMode) => {
     aceEditor[y].session.on("change", function () {
       editorOnChange(aceEditor[y], y);
     });
+    if (y === 0) {
+      aceEditor[y].focus();
+      aceEditor[y].navigateFileEnd();
+    }
   }
   x++;
 };
@@ -142,27 +172,34 @@ const editorOnChange = debounce(function (ed, index) {
 });
 
 const updateiFrame = debounce(function (index) {
-  // aceEditor[index].focus();
-  // aceEditor[index].navigateFileEnd();
   let htmlTextArea, cssTextArea, jsTextArea, iframeResult;
   let bigscreen = document.querySelector(".bigscreen");
-  bigscreen.style.display !== "none" ? (htmlTextArea = aceEditor[0].getSession().getValue()) : null;
+  bigscreen.style.display !== "none" ? (htmlTextArea = aceEditor[0].getSession().getValue()) : "";
+  htmlTextArea = htmlTextArea.trim();
   bigscreen.style.display !== "none"
     ? (cssTextArea = aceEditor[1].getSession().getValue())
     : (cssTextArea = aceEditor[4].getSession().getValue());
+  cssTextArea = cssTextArea.replace(/\r?\n|\r|\s\s+/g, "").trim();
   bigscreen.style.display !== "none"
     ? (jsTextArea = aceEditor[2].getSession().getValue())
     : (jsTextArea = aceEditor[5].getSession().getValue());
+  jsTextArea = jsTextArea.trim();
   bigscreen.style.display !== "none"
     ? (iframeResult = document.querySelectorAll(".fi-2-column-4")[0])
     : (iframeResult = document.querySelectorAll(".fi-2-column-4")[1]);
-  const iframeDoc = iframeResult.contentDocument || iframeResult.contentWindow.document;
-  const iframeHead = iframeDoc.head;
-  const iframeBody = iframeDoc.body;
-
-  iframeHead.innerHTML = "\n<style>\n" + cssTextArea + "\n</style>\n";
-  iframeBody.innerHTML = "\n" + htmlTextArea + "\n";
-  const script = iframeDoc.createElement("script");
-  script.innerHTML = "\n" + jsTextArea + "\n";
-  iframeBody.appendChild(script);
+  let iframeDoc = iframeResult.contentDocument || iframeResult.contentWindow.document;
+  iframeDoc.open();
+  if (htmlTextArea.length > 0) iframeDoc.write(htmlTextArea);
+  else iframeDoc.write("<!DOCTYPE html><html><head></head><body></body></html>");
+  if (cssTextArea.length > 0) {
+    let style = iframeDoc.createElement("style");
+    style.innerText = cssTextArea;
+    iframeDoc.head.appendChild(style);
+  }
+  if (jsTextArea.length > 0) {
+    let script = iframeDoc.createElement("script");
+    script.innerText = jsTextArea;
+    iframeDoc.body.appendChild(script);
+  }
+  iframeDoc.close();
 });
