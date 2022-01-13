@@ -100,12 +100,22 @@
             <li class="navitem optionsNav">
               <a href="#" class="optionsNavLink"></a>
               <ul>
-                <li style="display: none"><a href="#">Save Code</a></li>
+                <li onclick="saveTextAsFile(window.finalDoc.outerHTML)">
+                  <a href="#"
+                    ><img
+                      src="./img/save-solid.svg"
+                      alt="save"
+                      width="20px"
+                      height="19px"
+                      style="vertical-align: middle; filter: invert(1); margin-top: -4px; margin-right: 5px"
+                    />Save Code</a
+                  >
+                </li>
                 <li onclick="changeTheme()">
                   <a href="#" id="chTheme"
                     ><img
                       src="./img/adjust-solid.svg"
-                      alt="html5"
+                      alt="theme"
                       width="20px"
                       height="19px"
                       style="vertical-align: middle; filter: invert(1); margin-top: -2px"

@@ -142,6 +142,7 @@ const changeTheme = () => {
     document.querySelectorAll(".editor")[t].style.background = themeBg;
   }
 };
+
 var aceEditor = [],
   x = 0;
 const makeEditor = (editor, editorMode) => {
@@ -167,6 +168,49 @@ const makeEditor = (editor, editorMode) => {
   x++;
 };
 
+function datetime() {
+  var date = new Date();
+  var dd = date.getDate().toString().padStart(2, "0");
+  var mm = (date.getMonth() + 1).toString().padStart(2, "0");
+  var yyyy = date.getFullYear().toString();
+  var hr = date.getHours().toString().padStart(2, "0");
+  var min = date.getMinutes().toString().padStart(2, "0");
+  var sec = date.getSeconds().toString().padStart(2, "0");
+  var fulldate = dd + "-" + mm + "-" + yyyy;
+  var fulltime = hr + "." + min + "." + sec;
+  return {
+    date,
+    dd,
+    mm,
+    yyyy,
+    hr,
+    min,
+    sec,
+    fulldate,
+    fulltime,
+  };
+}
+
+function saveTextAsFile(text) {
+  var textFileAsBlob = new Blob([text], {
+    type: "text/html",
+  });
+  var dt = datetime();
+  var fileNameToSaveAs = "webdocument_" + dt.fulldate + "_" + dt.fulltime + ".html";
+  var downloadLink = document.createElement("a");
+  downloadLink.download = fileNameToSaveAs;
+  downloadLink.innerHTML = "Download File";
+  if (window.webkitURL != null) {
+    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+  } else {
+    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+  }
+  downloadLink.click();
+}
+
 const editorOnChange = debounce(function (ed, index) {
   updateiFrame(index);
 });
@@ -187,6 +231,8 @@ const updateiFrame = debounce(function (index) {
   bigscreen.style.display !== "none"
     ? (iframeResult = document.querySelectorAll(".fi-2-column-4")[0])
     : (iframeResult = document.querySelectorAll(".fi-2-column-4")[1]);
+  window.finalDoc = document.createElement("html");
+  finalDoc.innerHTML = htmlTextArea;
   let iframeDoc = iframeResult.contentDocument || iframeResult.contentWindow.document;
   iframeDoc.open();
   if (htmlTextArea.length > 0) iframeDoc.write(htmlTextArea);
@@ -195,11 +241,13 @@ const updateiFrame = debounce(function (index) {
     let style = iframeDoc.createElement("style");
     style.innerText = cssTextArea;
     iframeDoc.head.appendChild(style);
+    finalDoc.querySelector("head").innerHTML += style.outerHTML;
   }
   if (jsTextArea.length > 0) {
     let script = iframeDoc.createElement("script");
     script.innerText = jsTextArea;
     iframeDoc.body.appendChild(script);
+    finalDoc.querySelector("body").innerHTML += script.outerHTML;
   }
   iframeDoc.close();
 });
